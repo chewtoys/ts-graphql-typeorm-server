@@ -1,0 +1,50 @@
+{
+  "name": "ts-graphql-typeorm-server",
+  "version": "0.0.1",
+  "description": "Awesome project developed with TypeORM.",
+  "devDependencies": {
+    "@babel/polyfill": "^7.2.3",
+    "@types/axios": "^0.14.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/ioredis": "^4.0.4",
+    "@types/jest": "^23.3.10",
+    "@types/joi": "^14.0.1",
+    "@types/node": "^10.12.18",
+    "@types/uuid": "^3.4.4",
+    "axios": "^0.18.0",
+    "babel-register": "^6.26.0",
+    "env-cmd": "^8.0.2",
+    "graphql-code-generator": "^0.15.1",
+    "graphql-codegen-add": "^0.15.1",
+    "graphql-codegen-time": "^0.15.1",
+    "graphql-codegen-typescript-common": "^0.15.1",
+    "graphql-codegen-typescript-resolvers": "^0.15.1",
+    "graphql-codegen-typescript-server": "^0.15.1",
+    "graphql-request": "^1.8.2",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
+    "ts-jest": "^23.10.5",
+    "ts-node": "7.0.1",
+    "typescript": "3.2.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "graphql": "^14.0.2",
+    "graphql-import": "^0.7.1",
+    "graphql-tools": "^4.0.3",
+    "graphql-yoga": "^1.16.9",
+    "ioredis": "^4.3.0",
+    "joi": "^14.3.0",
+    "pg": "^7.7.1",
+    "reflect-metadata": "^0.1.12",
+    "tslint-config-prettier": "^1.17.0",
+    "typeorm": "0.2.9",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "test": "env-cmd ./config/test.env jest --watch",
+    "start": "ts-node src/index.ts",
+    "gen-types": "gql-gen",
+    "dev": "env-cmd ./config/dev.env nodemon --exec ts-node src/index.ts"
+  }
+}
