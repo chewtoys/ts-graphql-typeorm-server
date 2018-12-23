@@ -1,5 +1,6 @@
 import { Redis } from 'ioredis';
 import { Request } from 'express';
+import { User } from '../models/User';
 
 export interface Error {
   path: string;
@@ -14,6 +15,14 @@ interface RegisterInput {
 export interface IContext {
   redis: Redis;
   request: Request;
+  user: User;
+}
+
+export interface Resolver {
+  parent: any;
+  args: any;
+  context: IContext;
+  info: any;
 }
 
 export type ValidateRegister = (arg: RegisterInput) => Promise<Array<Error>>;

@@ -6,4 +6,11 @@ type Query {
 
 type Mutation {
   register(email: String!, password: String!): [Error!]
+  login(email: String!, password: String!): AuthResponse!
+  logout: Boolean!
+}
+
+type AuthResponse {
+  error: [Error!]
+  token: String
 }

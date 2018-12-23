@@ -1,8 +1,8 @@
 import { MutationResolvers } from '../../../types/schema';
-import hashPassword from '../auth/hashPassword';
 import { User } from '../../../models/User';
 import validateRegister from '../auth/validateRegister';
 import { createConfirmEmailLink } from '../auth/createConfirmEmailLink';
+import { confirmEmail } from '../../../services/email/confirmEmail';
 
 const register: MutationResolvers.RegisterResolver = async (
   _,
@@ -12,15 +12,15 @@ const register: MutationResolvers.RegisterResolver = async (
   const error = await validateRegister({ email, password });
   if (error) { return error; }
 
-  const hashed = await hashPassword(password);
   const user = await User.create({
     email,
-    password: hashed
+    password
   }).save();
 
   const url = `${request.protocol}://${request.get('host')}`;
-  createConfirmEmailLink(url, user.id, redis);
+  const link = await createConfirmEmailLink(url, user.id, redis);
 
+  await confirmEmail(email, link);
   return null;
 };
 

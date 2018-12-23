@@ -6,7 +6,8 @@ import {
   validEmailErr,
   shortPassErr,
   longPassErr
-} from '../../auth/validateRegister';
+} from '../../errorMessages';
+import { Connection } from 'typeorm';
 
 const { URL } = process.env;
 
@@ -22,8 +23,13 @@ const mutation = (e: string, p: string) => `
   }
 `;
 
+let connection: Connection;
 beforeAll(async () => {
-  await createDbConnection();
+  connection = await createDbConnection();
+});
+
+afterAll(async () => {
+  await connection.close();
 });
 
 afterEach(async () => {

@@ -1,5 +1,1 @@
-import { resolvers } from './resolvers';
-
-export default {
-  resolvers
-};
+export * from './resolvers';

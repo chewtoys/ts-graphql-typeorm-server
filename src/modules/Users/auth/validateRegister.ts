@@ -1,11 +1,8 @@
 import * as Joi from 'joi';
 import { User } from '../../../models/User';
 import { ValidateRegister } from '../../../types/types';
+import { emailTakenErr } from '../errorMessages';
 
-export const validEmailErr = 'Email must be a valid email';
-export const shortPassErr = 'Password length must be at least 8 characters long';
-export const longPassErr = 'Password length must be less than or equal to 30 characters long';
-export const emailTakenErr = 'Email already taken';
 
 const opts = {
   language: {

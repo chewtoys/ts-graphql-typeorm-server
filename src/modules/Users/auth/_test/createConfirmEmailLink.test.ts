@@ -3,16 +3,25 @@ import axios from 'axios';
 import { createConfirmEmailLink } from '../createConfirmEmailLink';
 import { createDbConnection } from '../../../../utils/createDbConnection';
 import { User } from '../../../../models/User';
+import { Connection } from 'typeorm';
 
 let userId: string;
+let connection: Connection;
 
+const email = 'fake@fake.com';
+const password = 'asdasdasdasd';
 beforeAll(async () => {
-  await createDbConnection();
+  connection = await createDbConnection();
   const user = await User.create({
-    email: 'fake@fake.com',
-    password: 'asdasdasdasd'
+    email,
+    password
   }).save();
   userId = user.id;
+});
+
+afterAll(async () => {
+  await User.delete({ email });
+  await connection.close();
 });
 
 describe('confirmation', () => {

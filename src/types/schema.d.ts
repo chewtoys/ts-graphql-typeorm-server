@@ -1,5 +1,5 @@
 ./types.d.ts#IContext
-// Generated in 2018-12-22T20:05:32+03:00
+// Generated in 2018-12-23T17:33:34+03:00
 export type Maybe<T> = T | null;
 
 
@@ -16,22 +16,34 @@ export type Maybe<T> = T | null;
 
 
 export interface Query {
-
+  
   hello: string;
 }
 
 
 export interface Mutation {
-
+  
   register?: Maybe<Error[]>;
+  
+  login: AuthResponse;
+  
+  logout: boolean;
 }
 
 
 export interface Error {
-
+  
   path: string;
-
+  
   message: string;
+}
+
+
+export interface AuthResponse {
+  
+  error?: Maybe<Error[]>;
+  
+  token?: Maybe<string>;
 }
 
 
@@ -41,9 +53,15 @@ export interface Error {
 // ====================================================
 
 export interface RegisterMutationArgs {
-
+  
   email: string;
-
+  
+  password: string;
+}
+export interface LoginMutationArgs {
+  
+  email: string;
+  
   password: string;
 }
 
@@ -52,7 +70,7 @@ import { GraphQLResolveInfo } from 'graphql';
 
 
 
-import { IContext } from './types';
+import { IContext } from './types.d.ts';
 
 export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
   parent: Parent,
@@ -99,43 +117,70 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
-
+    
     hello?: HelloResolver<string, TypeParent, Context>;
   }
 
 
-  export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace MutationResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
-
+    
     register?: RegisterResolver<Maybe<Error[]>, TypeParent, Context>;
+    
+    login?: LoginResolver<AuthResponse, TypeParent, Context>;
+    
+    logout?: LogoutResolver<boolean, TypeParent, Context>;
   }
 
 
   export type RegisterResolver<R = Maybe<Error[]>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, RegisterArgs>;
   export interface RegisterArgs {
-
+    
     email: string;
-
+    
     password: string;
   }
 
 
+  export type LoginResolver<R = AuthResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, LoginArgs>;
+  export interface LoginArgs {
+    
+    email: string;
+    
+    password: string;
+  }
+
+
+  export type LogoutResolver<R = boolean, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 export namespace ErrorResolvers {
   export interface Resolvers<Context = IContext, TypeParent = Error> {
-
+    
     path?: PathResolver<string, TypeParent, Context>;
-
+    
     message?: MessageResolver<string, TypeParent, Context>;
   }
 
 
   export type PathResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;
-  export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;
+  export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AuthResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = AuthResponse> {
+    
+    error?: ErrorResolver<Maybe<Error[]>, TypeParent, Context>;
+    
+    token?: TokenResolver<Maybe<string>, TypeParent, Context>;
+  }
+
+
+  export type ErrorResolver<R = Maybe<Error[]>, Parent = AuthResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TokenResolver<R = Maybe<string>, Parent = AuthResponse, Context = IContext> = Resolver<R, Parent, Context>;  
 }
 
 
@@ -164,13 +209,14 @@ export interface DeprecatedDirectiveArgs {
 
 
 export interface IResolvers {
-  Query?: QueryResolvers.Resolvers;
-  Mutation?: MutationResolvers.Resolvers;
-  Error?: ErrorResolvers.Resolvers;
+    Query?: QueryResolvers.Resolvers;
+    Mutation?: MutationResolvers.Resolvers;
+    Error?: ErrorResolvers.Resolvers;
+    AuthResponse?: AuthResponseResolvers.Resolvers;
 }
 
 export interface IDirectiveResolvers<Result> {
-  skip?: SkipDirectiveResolver<Result>;
-  include?: IncludeDirectiveResolver<Result>;
-  deprecated?: DeprecatedDirectiveResolver<Result>;
+    skip?: SkipDirectiveResolver<Result>;
+    include?: IncludeDirectiveResolver<Result>;
+    deprecated?: DeprecatedDirectiveResolver<Result>;
 }
