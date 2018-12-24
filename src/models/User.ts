@@ -6,17 +6,25 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar', { length: 255 })
+  @Column('text', { nullable: true })
+  googleId: string;
+
+  @Column('varchar', { length: 255, nullable: true })
   email: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   password: string;
 
   @Column('boolean', { default: false })
   confirmed: boolean;
 
+  @Column('boolean', { default: false })
+  resetPasswordLocked: boolean;
+
   @BeforeInsert()
-  async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
+  async hashPasswordBeforeInser() {
+    if (this.password) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
   }
 }

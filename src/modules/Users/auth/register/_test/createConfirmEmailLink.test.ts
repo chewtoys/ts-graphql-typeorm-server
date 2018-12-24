@@ -1,8 +1,8 @@
 import Redis from 'ioredis';
 import axios from 'axios';
 import { createConfirmEmailLink } from '../createConfirmEmailLink';
-import { createDbConnection } from '../../../../utils/createDbConnection';
-import { User } from '../../../../models/User';
+import { createDbConnection } from '../../../../../utils/createDbConnection';
+import { User } from '../../../../../models/User';
 import { Connection } from 'typeorm';
 
 let userId: string;

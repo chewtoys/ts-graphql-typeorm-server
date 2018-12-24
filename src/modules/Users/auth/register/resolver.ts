@@ -1,12 +1,12 @@
-import { MutationResolvers } from '../../../types/schema';
-import { User } from '../../../models/User';
-import validateRegister from '../auth/validateRegister';
-import { createConfirmEmailLink } from '../auth/createConfirmEmailLink';
-import { confirmEmail } from '../../../services/email/confirmEmail';
+import { MutationResolvers } from '../../../../types/schema';
+import { User } from '../../../../models/User';
+import validateRegister from './validateRegister';
+import { createConfirmEmailLink } from './createConfirmEmailLink';
+import { confirmEmail } from '../../../../services/email/confirmEmail';
 
 const register: MutationResolvers.RegisterResolver = async (
   _,
-  { email, password },
+  { input: { email, password } },
   { redis, request }
 ) => {
   const error = await validateRegister({ email, password });

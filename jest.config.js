@@ -8,6 +8,6 @@ module.exports = {
   setupTestFrameworkScriptFile: './test/setupScript.ts',
   globalSetup: './test/globalSetup.js',
   globalTeardown: './test/globalTeardown.js',
-  verbose: true,
+  verbose: false,
   testEnvironment: 'node'
 };

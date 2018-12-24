@@ -5,12 +5,56 @@ type Query {
 }
 
 type Mutation {
-  register(email: String!, password: String!): [Error!]
-  login(email: String!, password: String!): AuthResponse!
-  logout: Boolean!
+  register(input: RegisterInput!): [Error!]
+  login(input: LoginInput!): LoginResponse!
+  logout: LogoutResponse!
+  requestResetPassword(input: RequestResetPasswordInput): RequestResetPasswordResponse!
+  resetPassword(input: ResetPasswordInput!): ResetPasswordResponse!
 }
 
-type AuthResponse {
+input RegisterInput {
+  email: String!
+  password: String!
+}
+
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
   error: [Error!]
+  success: Boolean!
   token: String
 }
+
+
+type LogoutResponse {
+  error: [Error!]
+  success: Boolean!
+}
+
+
+
+input RequestResetPasswordInput {
+  email: String!
+}
+
+type RequestResetPasswordResponse {
+  error: [Error!]
+  success: Boolean!
+}
+
+
+
+input ResetPasswordInput {
+  newPassword: String!
+  key: String!
+}
+
+type ResetPasswordResponse {
+  error: [Error!]
+  success: Boolean!
+}
+

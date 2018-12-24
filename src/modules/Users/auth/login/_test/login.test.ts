@@ -1,31 +1,12 @@
-import { request } from 'graphql-request';
-import { invalidLogin, confirmEmailErr } from '../../errorMessages';
-import { User } from '../../../../models/User';
-import { createDbConnection } from '../../../../utils/createDbConnection';
+import * as faker from 'faker';
+import { invalidLogin, confirmEmailErr } from '../../../errorMessages';
+import { User } from '../../../../../models/User';
+import { createDbConnection } from '../../../../../utils/createDbConnection';
 import { Connection } from 'typeorm';
+import { TestClient } from '../../../../../../test/testClient';
 
-const { URL } = process.env;
 
-const registerMutation = (e: string, p: string) => `
-  mutation {
-    register(email: "${e}", password: "${p}") {
-      path
-      message
-    }
-  }
-`;
-
-const loginMutation = (e: string, p: string) => `
-  mutation {
-    login(email: "${e}", password: "${p}") {
-      error {
-        path
-        message
-      }
-      token
-    }
-  }
-`;
+const client = new TestClient();
 
 let connection: Connection;
 beforeAll(async () => {
@@ -37,15 +18,15 @@ afterAll(async () => {
 });
 
 describe('login', () => {
-  const email = 'test@test.com';
-  const password = '123123123123';
+  const email = faker.internet.email();
+  const password = faker.internet.password();
   describe('errors', () => {
     beforeAll(async () => {
-      await request(URL, registerMutation(email, password));
+      await client.register(email, password);
     });
 
     test('email not comfirmed', async () => {
-      const response: any = await request(URL, loginMutation(email, password));
+      const response = await client.login(email, password);
       const { error } = response.login;
       expect(error).toHaveLength(1);
       expect(error[0]).toHaveProperty('path', 'login');
@@ -58,7 +39,7 @@ describe('login', () => {
       });
 
       test('invalid email', async () => {
-        const response: any = await request(URL, loginMutation('tes@test.com', password));
+        const response = await client.login('tes@test.com', password);
         const { error } = response.login;
         expect(error).toHaveLength(1);
         expect(error[0]).toHaveProperty('path', 'login');
@@ -66,7 +47,7 @@ describe('login', () => {
       });
 
       test('invalid password', async () => {
-        const response: any = await request(URL, loginMutation(email, '1231231'));
+        const response = await client.login(email, '1231231');
         const { error } = response.login;
         expect(error).toHaveLength(1);
         expect(error[0]).toHaveProperty('path', 'login');
@@ -74,7 +55,7 @@ describe('login', () => {
       });
 
       test('login', async () => {
-        const response: any = await request(URL, loginMutation(email, password));
+        const response = await client.login(email, password);
         expect(typeof response.login.token === 'string').toBeTruthy();
       });
     });

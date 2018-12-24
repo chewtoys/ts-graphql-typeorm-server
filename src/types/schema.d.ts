@@ -1,7 +1,33 @@
 ./types.d.ts#IContext
-// Generated in 2018-12-23T17:33:34+03:00
+// Generated in 2018-12-24T14:27:29+03:00
 export type Maybe<T> = T | null;
 
+
+export interface RegisterInput {
+
+  email: string;
+
+  password: string;
+}
+
+export interface LoginInput {
+
+  email: string;
+
+  password: string;
+}
+
+export interface RequestResetPasswordInput {
+
+  email: string;
+}
+
+export interface ResetPasswordInput {
+
+  newPassword: string;
+
+  key: string;
+}
 
 
 
@@ -16,34 +42,62 @@ export type Maybe<T> = T | null;
 
 
 export interface Query {
-  
+
   hello: string;
 }
 
 
 export interface Mutation {
-  
+
   register?: Maybe<Error[]>;
-  
-  login: AuthResponse;
-  
-  logout: boolean;
+
+  login: LoginResponse;
+
+  logout: LogoutResponse;
+
+  RequestResetPassword: RequestResetPasswordResponse;
+
+  resetPassword: ResetPasswordResponse;
 }
 
 
 export interface Error {
-  
+
   path: string;
-  
+
   message: string;
 }
 
 
-export interface AuthResponse {
-  
+export interface LoginResponse {
+
   error?: Maybe<Error[]>;
-  
+
+  success: boolean;
+
   token?: Maybe<string>;
+}
+
+
+export interface LogoutResponse {
+
+  error?: Maybe<Error[]>;
+
+  success: boolean;
+}
+
+
+export interface RequestResetPasswordResponse {
+
+  success: boolean;
+}
+
+
+export interface ResetPasswordResponse {
+
+  error?: Maybe<Error[]>;
+
+  success: boolean;
 }
 
 
@@ -53,16 +107,20 @@ export interface AuthResponse {
 // ====================================================
 
 export interface RegisterMutationArgs {
-  
-  email: string;
-  
-  password: string;
+
+  input: RegisterInput;
 }
 export interface LoginMutationArgs {
-  
-  email: string;
-  
-  password: string;
+
+  input: LoginInput;
+}
+export interface RequestResetPasswordMutationArgs {
+
+  input?: Maybe<RequestResetPasswordInput>;
+}
+export interface ResetPasswordMutationArgs {
+
+  input: ResetPasswordInput;
 }
 
 
@@ -70,7 +128,7 @@ import { GraphQLResolveInfo } from 'graphql';
 
 
 
-import { IContext } from './types.d.ts';
+import { IContext } from './types';
 
 export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
   parent: Parent,
@@ -117,70 +175,123 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
-    
+
     hello?: HelloResolver<string, TypeParent, Context>;
   }
 
 
-  export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type HelloResolver<R = string, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
 }
 
 export namespace MutationResolvers {
   export interface Resolvers<Context = IContext, TypeParent = {}> {
-    
+
     register?: RegisterResolver<Maybe<Error[]>, TypeParent, Context>;
-    
-    login?: LoginResolver<AuthResponse, TypeParent, Context>;
-    
-    logout?: LogoutResolver<boolean, TypeParent, Context>;
+
+    login?: LoginResolver<LoginResponse, TypeParent, Context>;
+
+    logout?: LogoutResolver<LogoutResponse, TypeParent, Context>;
+
+    RequestResetPassword?: RequestResetPasswordResolver<RequestResetPasswordResponse, TypeParent, Context>;
+
+    resetPassword?: ResetPasswordResolver<ResetPasswordResponse, TypeParent, Context>;
   }
 
 
   export type RegisterResolver<R = Maybe<Error[]>, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, RegisterArgs>;
   export interface RegisterArgs {
-    
-    email: string;
-    
-    password: string;
+
+    input: RegisterInput;
   }
 
 
-  export type LoginResolver<R = AuthResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, LoginArgs>;
+  export type LoginResolver<R = LoginResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, LoginArgs>;
   export interface LoginArgs {
-    
-    email: string;
-    
-    password: string;
+
+    input: LoginInput;
   }
 
 
-  export type LogoutResolver<R = boolean, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type LogoutResolver<R = LogoutResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context>;
+  export type RequestResetPasswordResolver<R = RequestResetPasswordResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, RequestResetPasswordArgs>;
+  export interface RequestResetPasswordArgs {
+
+    input?: Maybe<RequestResetPasswordInput>;
+  }
+
+
+  export type ResetPasswordResolver<R = ResetPasswordResponse, Parent = {}, Context = IContext> = Resolver<R, Parent, Context, ResetPasswordArgs>;
+  export interface ResetPasswordArgs {
+
+    input: ResetPasswordInput;
+  }
+
+
 }
 
 export namespace ErrorResolvers {
   export interface Resolvers<Context = IContext, TypeParent = Error> {
-    
+
     path?: PathResolver<string, TypeParent, Context>;
-    
+
     message?: MessageResolver<string, TypeParent, Context>;
   }
 
 
   export type PathResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;
-  export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type MessageResolver<R = string, Parent = Error, Context = IContext> = Resolver<R, Parent, Context>;
 }
 
-export namespace AuthResponseResolvers {
-  export interface Resolvers<Context = IContext, TypeParent = AuthResponse> {
-    
+export namespace LoginResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = LoginResponse> {
+
     error?: ErrorResolver<Maybe<Error[]>, TypeParent, Context>;
-    
+
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+
     token?: TokenResolver<Maybe<string>, TypeParent, Context>;
   }
 
 
-  export type ErrorResolver<R = Maybe<Error[]>, Parent = AuthResponse, Context = IContext> = Resolver<R, Parent, Context>;
-  export type TokenResolver<R = Maybe<string>, Parent = AuthResponse, Context = IContext> = Resolver<R, Parent, Context>;  
+  export type ErrorResolver<R = Maybe<Error[]>, Parent = LoginResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type SuccessResolver<R = boolean, Parent = LoginResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type TokenResolver<R = Maybe<string>, Parent = LoginResponse, Context = IContext> = Resolver<R, Parent, Context>;
+}
+
+export namespace LogoutResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = LogoutResponse> {
+
+    error?: ErrorResolver<Maybe<Error[]>, TypeParent, Context>;
+
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+  }
+
+
+  export type ErrorResolver<R = Maybe<Error[]>, Parent = LogoutResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type SuccessResolver<R = boolean, Parent = LogoutResponse, Context = IContext> = Resolver<R, Parent, Context>;
+}
+
+export namespace RequestResetPasswordResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = RequestResetPasswordResponse> {
+
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+  }
+
+
+  export type SuccessResolver<R = boolean, Parent = RequestResetPasswordResponse, Context = IContext> = Resolver<R, Parent, Context>;
+}
+
+export namespace ResetPasswordResponseResolvers {
+  export interface Resolvers<Context = IContext, TypeParent = ResetPasswordResponse> {
+
+    error?: ErrorResolver<Maybe<Error[]>, TypeParent, Context>;
+
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+  }
+
+
+  export type ErrorResolver<R = Maybe<Error[]>, Parent = ResetPasswordResponse, Context = IContext> = Resolver<R, Parent, Context>;
+  export type SuccessResolver<R = boolean, Parent = ResetPasswordResponse, Context = IContext> = Resolver<R, Parent, Context>;
 }
 
 
@@ -209,14 +320,17 @@ export interface DeprecatedDirectiveArgs {
 
 
 export interface IResolvers {
-    Query?: QueryResolvers.Resolvers;
-    Mutation?: MutationResolvers.Resolvers;
-    Error?: ErrorResolvers.Resolvers;
-    AuthResponse?: AuthResponseResolvers.Resolvers;
+  Query?: QueryResolvers.Resolvers;
+  Mutation?: MutationResolvers.Resolvers;
+  Error?: ErrorResolvers.Resolvers;
+  LoginResponse?: LoginResponseResolvers.Resolvers;
+  LogoutResponse?: LogoutResponseResolvers.Resolvers;
+  RequestResetPasswordResponse?: RequestResetPasswordResponseResolvers.Resolvers;
+  ResetPasswordResponse?: ResetPasswordResponseResolvers.Resolvers;
 }
 
 export interface IDirectiveResolvers<Result> {
-    skip?: SkipDirectiveResolver<Result>;
-    include?: IncludeDirectiveResolver<Result>;
-    deprecated?: DeprecatedDirectiveResolver<Result>;
+  skip?: SkipDirectiveResolver<Result>;
+  include?: IncludeDirectiveResolver<Result>;
+  deprecated?: DeprecatedDirectiveResolver<Result>;
 }
