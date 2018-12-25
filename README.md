@@ -1,6 +1,6 @@
 # ts-graphql-typeorm-server
 
-A basic typescript GraphQL server boilerplate with authentication
+A basic typescript-GraphQL server boilerplate with authentication
 
 #### Features
 
