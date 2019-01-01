@@ -25,4 +25,4 @@ export interface Resolver {
   info: any;
 }
 
-export type ValidateRegister = (arg: RegisterInput) => Promise<Array<Error>>;
+export type ValidateRegister = (arg: RegisterInput) => Promise<Error[]>;

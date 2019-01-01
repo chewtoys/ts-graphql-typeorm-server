@@ -2,6 +2,7 @@ import Jwt from 'jsonwebtoken';
 import { User } from '../../../models/User';
 import { Request } from 'express';
 import { redis } from '../../../services/redis';
+import { blacklistedPrefix } from '../../../constants';
 
 const { JWT_KEY } = process.env;
 
@@ -18,7 +19,7 @@ export const authenticateUser: AuthenticateUser = async (request) => {
   } catch (err) {
     return null;
   }
-  const blacklisted = await redis.get(id);
+  const blacklisted = await redis.get(`${blacklistedPrefix}${id}`);
   if (blacklisted) { return null; }
 
   const user = await User.findOne({ where: { id } });

@@ -1,7 +1,7 @@
 {
   "name": "ts-graphql-typeorm-server",
   "version": "0.0.1",
-  "description": "Awesome project developed with TypeORM.",
+  "description": "",
   "devDependencies": {
     "@babel/polyfill": "^7.2.3",
     "@types/axios": "^0.14.0",
