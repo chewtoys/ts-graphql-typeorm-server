@@ -1,0 +1,14 @@
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  login(input: LoginInput!): LoginResponse!
+}
+
+type LoginResponse {
+  error: [Error!]
+  success: Boolean!
+  token: String
+}

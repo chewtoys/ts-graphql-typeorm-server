@@ -1,0 +1,13 @@
+type Query {
+  hello: String!
+}
+
+type Error {
+  path: String!
+  message: String!
+}
+
+type Response {
+  error: [Error!]
+  success: Boolean!
+}

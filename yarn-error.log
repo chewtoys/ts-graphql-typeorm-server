@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Mert\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/passport-google-oauth20
+  C:\Program Files\nodejs\node.exe C:\Users\Mert\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add glob merge-grahpql-schemas
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Mert\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\PostgreSQL\pg11\bin;C:\Users\Mert\AppData\Local\Microsoft\WindowsApps;C:\Users\Mert\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Mert\AppData\Roaming\npm
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fpassport-google-oauth20: Not found
+  Error: https://registry.yarnpkg.com/merge-grahpql-schemas: Not found
       at Request.params.callback [as _callback] (C:\Users\Mert\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:65894:18)
       at Request.self.callback (C:\Users\Mert\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129018:22)
       at Request.emit (events.js:182:13)
@@ -30,7 +30,7 @@ npm manifest:
   {
     "name": "ts-graphql-typeorm-server",
     "version": "0.0.1",
-    "description": "Awesome project developed with TypeORM.",
+    "description": "",
     "devDependencies": {
       "@babel/polyfill": "^7.2.3",
       "@types/axios": "^0.14.0",

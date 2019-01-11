@@ -1,0 +1,8 @@
+type Mutation {
+  logout: LogoutResponse!
+}
+
+type LogoutResponse {
+  error: [Error!]
+  success: Boolean!
+}

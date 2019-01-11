@@ -1,0 +1,13 @@
+type Mutation {
+  requestResetPassword(input: RequestResetPasswordInput): Response!
+  resetPassword(input: ResetPasswordInput!): Response!
+}
+
+input RequestResetPasswordInput {
+  email: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
+  key: String!
+}
