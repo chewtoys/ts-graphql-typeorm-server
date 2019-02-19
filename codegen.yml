@@ -1,4 +1,4 @@
-schema: http://localhost:4000
+schema: http://localhost:3000
 overwrite: true
 config:
   contextType: ./types.ts#IContext

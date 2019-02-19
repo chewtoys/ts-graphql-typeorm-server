@@ -1,14 +1,13 @@
-import faker from 'faker';
 import { createDbConnection } from '../../../../utils/createDbConnection';
 import { Connection } from 'typeorm';
 import { authenticateUser } from '../authenticateUser';
 import { User } from '../../../../models/User';
-import { TestClient } from '../../../../../test/testClient';
+import { TestClient } from '../../../../test/testClient';
 
 const client = new TestClient();
 
-const email = faker.internet.email();
-const password = faker.internet.password();
+let email: string;
+let password: string;
 
 const mockRequest: any = {
   headers: { authorization: '' }
@@ -16,30 +15,28 @@ const mockRequest: any = {
 
 let connection: Connection;
 beforeAll(async () => {
-  connection = await createDbConnection();
-  await User.create({ email, password, confirmed: true }).save();
+  connection = await createDbConnection('TEST');
+  const users = await client.createUser(1);
+  email = users[0].email;
+  password = users[0].password;
 });
 
 afterAll(async () => {
+  await User.delete({ email });
+
   await connection.close();
 });
 
-
 describe('reads the id from the token and returns the user', () => {
   it('returns the user', async () => {
-    await client.login(email, password);
-    mockRequest.headers.authorization = client.token;
+    const response: any = await client.login(email, password);
+    const { token } = response.login;
+    mockRequest.headers.authorization = token;
 
     const user = await User.findOne({ where: { email } });
     const res = await authenticateUser(mockRequest);
 
     expect(res).toHaveProperty('id', user.id);
     expect(res).toHaveProperty('email', email);
-  });
-
-  it('returns null when users not logged in', async () => {
-    await client.logout();
-    const res = await authenticateUser(mockRequest);
-    expect(res).toBeNull();
   });
 });

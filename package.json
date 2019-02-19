@@ -59,9 +59,10 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "test": "set TS_NODE_FILES=true && env-cmd ./config/test.env jest --watch --runInBand",
+    "test-db:setup": "ts-node ./src/test/setup.ts",
+    "test": "yarn run test-db:setup && jest --watchAll --runInBand",
     "start": "ts-node src/index.ts",
     "gen-types": "gql-gen",
-    "dev": "env-cmd ./config/dev.env nodemon --exec ts-node --files src/index.ts"
+    "dev": "nodemon --exec ts-node --files src/index.ts"
   }
 }

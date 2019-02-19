@@ -1,30 +1,30 @@
-import * as faker from 'faker';
+import faker from 'faker';
 import { invalidLogin, confirmEmailErr } from '../../../errorMessages';
 import { User } from '../../../../../models/User';
 import { createDbConnection } from '../../../../../utils/createDbConnection';
 import { Connection } from 'typeorm';
-import { TestClient } from '../../../../../../test/testClient';
-
+import { TestClient } from '../../../../../test/testClient';
 
 const client = new TestClient();
 
 let connection: Connection;
+faker.seed(Math.random());
+const email = faker.internet.email();
+const password = faker.internet.password();
+const username = faker.internet.userName();
+
 beforeAll(async () => {
-  connection = await createDbConnection();
+  connection = await createDbConnection('TEST');
+  await client.register(username, email, password);
 });
 
 afterAll(async () => {
+  await User.delete({ email });
   await connection.close();
 });
 
 describe('login', () => {
-  const email = faker.internet.email();
-  const password = faker.internet.password();
   describe('errors', () => {
-    beforeAll(async () => {
-      await client.register(email, password);
-    });
-
     test('email not comfirmed', async () => {
       const response = await client.login(email, password);
       const { error } = response.login;

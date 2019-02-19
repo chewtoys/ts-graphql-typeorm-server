@@ -1,5 +1,11 @@
 import bcrypt from 'bcryptjs';
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  BeforeInsert
+} from 'typeorm';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -8,6 +14,9 @@ export class User extends BaseEntity {
 
   @Column('text', { nullable: true })
   googleId: string;
+
+  @Column('varchar', { length: 100, nullable: false })
+  username: string;
 
   @Column('varchar', { length: 255, nullable: true })
   email: string;

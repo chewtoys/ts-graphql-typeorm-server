@@ -1,7 +1,15 @@
-import { createConnection, getConnectionOptions } from 'typeorm';
+import { createConnection } from 'typeorm';
+import { User } from '../models/User';
 
-export const createDbConnection = async () => {
-  const { DB_NAME } = process.env;
-  const connOpts = await getConnectionOptions(DB_NAME);
-  return createConnection({ ...connOpts, name: 'default' });
+export const createDbConnection = async (connType: string) => {
+  const { DATABASE_URL } = process.env;
+  return createConnection({
+    type: 'postgres',
+    synchronize: connType === 'PROD' ? false : true,
+    dropSchema: connType === 'TEST' && true,
+    logging: connType === 'DEV' && true,
+    entities: [User],
+    url: DATABASE_URL,
+    name: 'default'
+  });
 };

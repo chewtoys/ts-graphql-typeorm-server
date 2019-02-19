@@ -7,7 +7,7 @@ import { context } from './context';
 import { middlewares } from './middlewares';
 
 (async () => {
-  await createDbConnection();
+  await createDbConnection(process.env.CONN_TYPE);
 })();
 
 const server = new GraphQLServer({

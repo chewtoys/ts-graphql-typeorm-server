@@ -5,9 +5,6 @@ module.exports = {
   },
   testRegex: '(/_test/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  setupTestFrameworkScriptFile: './test/setupScript.ts',
-  globalSetup: './test/globalSetup.js',
-  globalTeardown: './test/globalTeardown.js',
   verbose: false,
   testEnvironment: 'node'
 };
