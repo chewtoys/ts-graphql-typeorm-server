@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
-    "lib": [
-      "es2018",
-      "esnext.asynciterable"
-    ],
+    "lib": ["es2018", "esnext.asynciterable"],
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -15,6 +12,7 @@
     "strictNullChecks": false,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
+    "skipLibCheck": true,
     "strictPropertyInitialization": false,
     "noImplicitThis": true,
     "alwaysStrict": true,

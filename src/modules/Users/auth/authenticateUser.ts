@@ -8,9 +8,14 @@ const { JWT_KEY } = process.env;
 
 type AuthenticateUser = (request: Request) => Promise<User> | null;
 
-export const authenticateUser: AuthenticateUser = async (request) => {
+export const authenticateUser: AuthenticateUser = async request => {
+  if (!request) {
+    return null;
+  }
   const token = request.headers.authorization;
-  if (!token) { return null; }
+  if (!token) {
+    return null;
+  }
 
   let id: any;
   try {
@@ -20,7 +25,9 @@ export const authenticateUser: AuthenticateUser = async (request) => {
     return null;
   }
   const blacklisted = await redis.get(`${blacklistedPrefix}${id}`);
-  if (blacklisted) { return null; }
+  if (blacklisted) {
+    return null;
+  }
 
   const user = await User.findOne({ where: { id } });
 

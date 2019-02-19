@@ -1,11 +1,9 @@
-import { GraphQLServer } from 'graphql-yoga';
 import googleAuth from './auth/google';
 import confirmEmail from './email/confirmEmail';
 import '../modules/Users/auth/googleOAuth';
+import { Application } from 'express';
 
-
-export const routes = (express: GraphQLServer['express']) => {
+export const routes = (express: Application) => {
   express.use('/auth/google', googleAuth);
   express.use('/', confirmEmail);
 };
-
